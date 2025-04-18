@@ -1,0 +1,134 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    gap: 20px;
+    padding: 15px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+#container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh; /* Full height of the viewport */
+}
+
+#map-container {
+    flex: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 10px;
+    /* min-width: 300px;
+    max-width: 600px;
+    border: 1px solid #ccc;
+    padding: 10px; */
+}
+
+#taiwan-svg {
+    max-width: 100%;
+    max-height: 100%;
+    height: auto;
+    width: auto;
+}
+
+/* Style individual paths within the features group */
+#taiwan-svg #features path {
+    fill: #eee; /* Default light grey fill */
+    stroke: #333; /* Default dark border color */
+    stroke-width: 0.5; /* Default border width */
+    cursor: pointer;
+    transition: fill 0.2s ease-in-out;
+}
+
+#taiwan-svg #features path:hover {
+    fill: #ddd; /* Slightly darker on hover */
+}
+
+/* Hide the label positioning data group */
+#taiwan-svg #label_points {
+    display: none;
+}
+
+/* Styling for the dynamically added text labels */
+#taiwan-svg #map-labels text {
+    font-size: 18px; /* <---- THIS IS THE MAIN SIZE */
+    font-family: sans-serif;
+    fill: #000000;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: none;
+    paint-order: stroke;
+    stroke: white;
+    stroke-width: 2.5px; /* You might want to adjust this too if the font size changes a lot */
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#controls-container {
+    flex: 1;
+    min-width: 250px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+#county-list {
+    flex: 1; /* Smaller portion of the layout */
+    max-width: 300px; /* Limit the width */
+    overflow-y: auto; /* Enable scrolling if content overflows */
+    border-right: 1px solid #ccc; /* Add a divider */
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+#county-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 5px;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease-in-out;
+}
+
+#county-list li:last-child {
+    border-bottom: none;
+}
+
+#county-list label {
+    flex-grow: 1;
+    margin-right: 10px;
+    font-size: 0.9em;
+}
+
+#county-list input[type="color"] {
+    width: 40px;
+    height: 30px;
+    border: 1px solid #ccc;
+    padding: 2px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* Basic responsive adjustments */
+@media (max-width: 750px) { /* Adjust breakpoint */
+    body {
+        flex-direction: column;
+    }
+     #map-container, #controls-container {
+        max-width: 100%;
+        max-height: 60vh; /* Limit map height on small screens */
+     }
+     #controls-container {
+         max-height: 40vh; /* Adjust control height */
+     }
+     #taiwan-svg #map-labels text {
+        font-size: 12px; /* Smaller font on smaller screens */
+        stroke-width: 2px;
+     }
+}
