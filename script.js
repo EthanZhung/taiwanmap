@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
             link.click();
             document.body.removeChild(link);
 
-            saveStatus.textContent = 'SVG 已儲存!';
+            saveStatus.textContent = 'SVG 儲存成功!';
             setTimeout(() => saveStatus.textContent = '', 3000);
 
         } catch (error) {
@@ -218,43 +218,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     saveButton.disabled = false;
                     return;
                  }
-
-                const aspectRatio = svgViewBox.width / svgViewBox.height;
-                const desiredHeight = Math.round(desiredWidth / aspectRatio);
-                canvas.width = desiredWidth;
-                canvas.height = desiredHeight;
-
-                // Use canvg.Canvg.fromString (or fallback)
-                const v = (canvg.Canvg && canvg.Canvg.fromString)
-                    ? canvg.Canvg.fromString(ctx, svgString, {
-                        ignoreMouse: true, ignoreAnimation: true, ignoreDimensions: false,
-                        scaleWidth: desiredWidth, scaleHeight: desiredHeight })
-                    : canvg.fromString(ctx, svgString, { // Older canvg versions fallback
-                        ignoreMouse: true, ignoreAnimation: true, ignoreDimensions: false,
-                        scaleWidth: desiredWidth, scaleHeight: desiredHeight });
-
-                v.render().then(() => {
-                    // Add white background for JPG
-                    ctx.globalCompositeOperation = 'destination-over';
-                    ctx.fillStyle = '#ffffff';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    const jpgDataUrl = canvas.toDataURL('image/jpeg', 0.9);
-
-                    // Trigger Download
-                    const link = document.createElement('a');
-                    link.href = jpgDataUrl;
-                    link.download = 'taiwan_map_colored.jpg';
-                    document.body.appendChild(link); link.click(); document.body.removeChild(link);
-
-                    saveStatus.textContent = '圖片已儲存!';
-                    setTimeout(() => saveStatus.textContent = '', 3000);
-
-                }).catch(error => {
-                     console.error("Canvg rendering failed:", error);
-                     saveStatus.textContent = '錯誤: 無法渲染SVG.';
-                }).finally(() => {
-                     saveButton.disabled = false;
-                });
 
             } catch (error) {
                 console.error("Error during save process:", error);
